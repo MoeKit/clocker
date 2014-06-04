@@ -1,4 +1,4 @@
-var $ = jQuery = window.jQuery || require('jquery');
+var $ = jQuery = window.jQuery || require('jquery') || require('zepto');
 module.exports = $;
 /*!
  * The Final Countdown for jQuery v2.0.2 (http://hilios.github.io/jQuery.countdown/)
