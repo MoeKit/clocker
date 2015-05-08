@@ -6,9 +6,13 @@
 ````
 
 ````javascript
-seajs.use('index', function($){
-    $('#clock').countdown('2014/06/05', function(event) {
-     $(this).html(event.strftime('<span>%D</span> 天 %H时%M分%S秒'));
-    });
+seajs.use(['index','jquery'], function(Clocker,$){
+ 	var cl =  new Clocker('2015/05/20',function(event){
+ 		$('#clock').html(event.strftime('<span>%D</span> 天 %H时%M分%S秒'));
+ 	});
+
+ 	setTimeout(function(){
+		//cl.stop();
+ 	},5000);
 });
 ````
