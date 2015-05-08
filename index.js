@@ -41,11 +41,10 @@ var DIRECTIVE_KEY_MAP = {
     'Y': 'years',
     'm': 'months',
     'w': 'weeks',
-    'd': 'days',
-    'D': 'totalDays',
+    'D': 'days',
     'H': 'hours',
     'M': 'minutes',
-    'S': 'seconds'
+    'S': 'seconds',
 };
 // Returns an escaped regexp from the string
 
@@ -89,6 +88,14 @@ function strftime(offsetObject) {
                 }
             }
         }
+        format = format.replace('%_M1',offsetObject.minutes_1)
+                        .replace('%_M2',offsetObject.minutes_2)
+                        .replace('%_S1',offsetObject.seconds_1)
+                        .replace('%_S2',offsetObject.seconds_2)
+                        .replace('%_H1',offsetObject.hours_1)
+                        .replace('%_H2',offsetObject.hours_2)
+                        .replace('%_D1',offsetObject.days_1)
+                        .replace('%_D2',offsetObject.days_2);
         format = format.replace(/%%/, '%');
         return format;
     };
@@ -113,6 +120,13 @@ function pluralize(format, count) {
         return plural;
     }
 }
+
+function splitNumber (number){
+    number = number+'';
+    number = (number.length===1?('0'+number):number)+'';
+    return number.split('');
+}
+
 // The Final Countdown
 var Countdown = function(finalDate, callback) {
     this.interval = null;
@@ -120,14 +134,6 @@ var Countdown = function(finalDate, callback) {
     // Register this instance
     this.instanceNumber = instances.length;
     instances.push(this);
-    // Save the reference
-    // this.$el.data('countdown-instance', this.instanceNumber);
-    // Register the callbacks when supplied
-    if (callback) {
-        this.on('update', callback);
-        this.on('stoped', callback);
-        this.on('finish', callback);
-    }
     // Set the final date and start
     this.setFinalDate(finalDate);
     this.start();
@@ -190,12 +196,22 @@ var fns = {
             seconds: this.totalSecsLeft % 60,
             minutes: Math.floor(this.totalSecsLeft / 60) % 60,
             hours: Math.floor(this.totalSecsLeft / 60 / 60) % 24,
-            days: Math.floor(this.totalSecsLeft / 60 / 60 / 24) % 7,
-            totalDays: Math.floor(this.totalSecsLeft / 60 / 60 / 24),
+            days: Math.floor(this.totalSecsLeft / 60 / 60 / 24),
             weeks: Math.floor(this.totalSecsLeft / 60 / 60 / 24 / 7),
             months: Math.floor(this.totalSecsLeft / 60 / 60 / 24 / 30),
             years: Math.floor(this.totalSecsLeft / 60 / 60 / 24 / 365)
         };
+
+        // split offset only for days, hours, minutes, seconds and two number like 45, do not support 100
+
+        var list = ['days','hours','minutes','seconds'];
+
+        for(var i=0;i<list.length;i++){
+            var key = list[i];
+            var numbers = splitNumber(this.offset[key]);
+            this.offset[key+'_1'] = numbers[0];
+            this.offset[key+'_2'] = numbers[1];
+        }
         // Dispatch an event
         if (this.totalSecsLeft === 0) {
             this.stop();
@@ -207,9 +223,10 @@ var fns = {
     dispatchEvent: function(eventName) {
         var event = {};
         event.finalDate = this.finalDate;
-        event.offset = $.extend({}, this.offset);
+        event.offset = this.offset;
         event.strftime = strftime(this.offset);
         this.emit(eventName, event);
+        this.emit('tick',event);
     }
 }
 
