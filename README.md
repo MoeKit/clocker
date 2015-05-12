@@ -1,7 +1,7 @@
 # Clocker
 
 
-
+[![MoeKit](https://moekit.timo.today/badge/clocker)](https://moekit.timo.today/package/clocker)  [![Build Status](https://travis-ci.org/MoeKit/clocker.svg?branch=master)](https://travis-ci.org/MoeKit/clocker)  [![Coverage Status](https://coveralls.io/repos/MoeKit/clocker/badge.svg)](https://coveralls.io/r/MoeKit/clocker)
 ---
 
 
