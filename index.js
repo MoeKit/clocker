@@ -178,14 +178,12 @@ var fns = {
     setFinalDate: function(value) {
         this.finalDate = parseDateString(value); // Cast the given date
     },
-    update: function() {
-        // Calculate the remaining time
-        this.totalSecsLeft = this.finalDate.getTime() -
-            new Date().getTime(); // In miliseconds
+    getOffset: function(){
+        this.totalSecsLeft = this.finalDate.getTime() - new Date().getTime(); // In miliseconds
         this.totalSecsLeft = Math.ceil(this.totalSecsLeft / 1000);
         this.totalSecsLeft = this.totalSecsLeft < 0 ? 0 : this.totalSecsLeft;
         // Calculate the offsets
-        this.offset = {
+        return {
             seconds: this.totalSecsLeft % 60,
             minutes: Math.floor(this.totalSecsLeft / 60) % 60,
             hours: Math.floor(this.totalSecsLeft / 60 / 60) % 24,
@@ -194,7 +192,10 @@ var fns = {
             months: Math.floor(this.totalSecsLeft / 60 / 60 / 24 / 30),
             years: Math.floor(this.totalSecsLeft / 60 / 60 / 24 / 365)
         };
-
+    },
+    update: function() {
+        // Calculate the offsets
+        this.offset = this.getOffset();
         // split offset only for days, hours, minutes, seconds and two number like 45, do not support 100
 
         var list = ['days','hours','minutes','seconds'];

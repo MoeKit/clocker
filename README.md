@@ -14,7 +14,7 @@
 + 格式化的时间字符串如 `YYYY/MM/DD` ,`MM/DD/YYYY`,`YYYY/MM/DD hh:mm:ss`,`MM/DD/YYYY hh:mm:ss`
 
 ```javascript
-var Clocker = require('index');
+var Clocker = require('clocker');
 var ck = new Clock('2016-06-01');
 ck.on('tick',function(event){
 	// do what you want
@@ -24,6 +24,14 @@ ck.on('tick',function(event){
 ## API
 
 ### 函数
+
++ `getOffset` 获取时间差，一般用于不需要实时计数时
+
+```
+var Clocker = require('clocker');
+var offset = new Clock('2016-06-01').getOffset();
+
+```
 
 + `pause` 暂停
 

@@ -2,6 +2,18 @@
 
 ---
 
+## 获取时间差
+
+````javascript
+var Clocker = require('clocker');
+var offset = new Clocker('2016-06-01').getOffset();
+console.log(offset);
+// {"seconds":37,"minutes":37,"hours":7,"days":385,"weeks":55,"months":12,"years":1}
+````
+
+
+## tick
+
 ````html
 <span id="clock1"></span>
 <br/>
@@ -21,6 +33,7 @@
 	font-size:60px;
 	color:#fff;
 	font-weight:bold;
+	font-family:"Microsoft YaHei ";
 }
 
 #clock4 span {
@@ -34,16 +47,16 @@
 #clock3 .d2 {
 	margin-left:25px;
 }
-.h1 {
+#clock3 .h1 {
 	margin-left:84px;
 }
-.h2 {
+#clock3 .h2 {
 	margin-left:30px;
 }
-.m1 {
+#clock3 .m1 {
 	margin-left:75px;
 }
-.m2 {
+#clock3 .m2 {
 	margin-left:28px;
 }
 
@@ -66,16 +79,16 @@
 ````
 
 ````javascript
-seajs.use(['index','jquery'], function(Clocker,$){
- 	var cl =  new Clocker('2015/05/20').on('tick',function(event){
- 		//console.log(event);
- 		$('#clock1').html(event.strftime('<span>%D</span> 天 %H时%M分%S秒'));
- 		$('#clock2').html(event.strftime('<span>%_D1%_D2</span> 天 %_H1%_H2时%_M1%_M2分%_S1%_S2秒'));
- 		$('#clock3').html(event.strftime('<span>%_D1</span><span class="d2">%_D2</span><span class="h1">%_H1</span><span class="h2">%_H2</span><span class="m1">%_M1</span><span class="m2">%_M2</span>'));
- 		$('#clock4').html(event.strftime('<span>%_D1</span><span class="d2">%_D2</span><span class="h1">%_H1</span><span class="h2">%_H2</span><span class="m1">%_M1</span><span class="m2">%_M2</span>'));
- 	});
- 	setTimeout(function(){
-		//cl.stop();
- 	},5000);
+var Clocker = require('clocker');
+var $ = require('jquery');
+var cl =  new Clocker('2015/05/20').on('tick',function(event){
+	//console.log(event);
+	$('#clock1').html(event.strftime('<span>%D</span> 天 %H时%M分%S秒'));
+	$('#clock2').html(event.strftime('<span>%_D1%_D2</span> 天 %_H1%_H2时%_M1%_M2分%_S1%_S2秒'));
+	$('#clock3').html(event.strftime('<span>%_D1</span><span class="d2">%_D2</span><span class="h1">%_H1</span><span class="h2">%_H2</span><span class="m1">%_M1</span><span class="m2">%_M2</span>'));
+	$('#clock4').html(event.strftime('<span>%_D1</span><span class="d2">%_D2</span><span class="h1">%_H1</span><span class="h2">%_H2</span><span class="m1">%_M1</span><span class="m2">%_M2</span>'));
 });
+setTimeout(function(){
+//cl.stop();
+},5000);
 ````

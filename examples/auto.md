@@ -31,16 +31,16 @@
 #clock3 .d2 {
 	margin-left:25px;
 }
-.h1 {
+#clock3 .h1 {
 	margin-left:84px;
 }
-.h2 {
+#clock3 .h2 {
 	margin-left:30px;
 }
-.m1 {
+#clock3 .m1 {
 	margin-left:75px;
 }
-.m2 {
+#clock3 .m2 {
 	margin-left:28px;
 }
 
@@ -63,15 +63,15 @@
 ````
 
 ````javascript
-seajs.use(['index','jquery'], function(Clocker,$){
-    var clockers = $('.clocker-box');
-    var tpls = clockers.map(function(index,one){
-        return $(one).html();
-    }).get();
- 	var cl =  new Clocker('2015/05/20').on('tick',function(event){
-        clockers.each(function(index,one){
-            $(one).html(event.strftime(tpls[index])).show();
-        });
- 	});
+var Clocker = require('clocker');
+var $ = require('jquery');
+var clockers = $('.clocker-box');
+var tpls = clockers.map(function(index,one){
+    return $(one).html();
+}).get();
+var cl =  new Clocker('2015/05/20').on('tick',function(event){
+	clockers.each(function(index,one){
+	    $(one).html(event.strftime(tpls[index])).show();
+	});
 });
 ````
