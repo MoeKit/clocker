@@ -4,7 +4,8 @@ node_js:
   - "0.10"
 
 install:
-  - npm install spm@ninja coveralls
+  - npm install spm coveralls
+  - node_modules/spm/bin/spm-config set registry https://moekit.timo.today
 
 before_script:
   - node_modules/spm/bin/spm-install

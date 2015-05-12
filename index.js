@@ -174,18 +174,11 @@ var fns = {
     remove: function() {
         this.stop.call(this);
         instances[this.instanceNumber] = null;
-        // Reset the countdown instance under data attr (Thanks to @assiotis)
-        delete this.$el.data().countdownInstance;
     },
     setFinalDate: function(value) {
         this.finalDate = parseDateString(value); // Cast the given date
     },
     update: function() {
-        // Stop if dom is not in the html (Thanks to @dleavitt)
-        /*if (this.$el.closest('html').length === 0) {
-                this.remove();
-                return;
-            }*/
         // Calculate the remaining time
         this.totalSecsLeft = this.finalDate.getTime() -
             new Date().getTime(); // In miliseconds

@@ -18,9 +18,6 @@
   "licenses": "MIT",
   "spm": {
     "main": "index.js",
-    "output": [
-      "countdown.js"
-    ],
     "alias": {},
     "devAlias": {},
     "engines": {},
