@@ -15,7 +15,9 @@
 
 ```javascript
 var Clocker = require('clocker');
-var ck = new Clock('2016-06-01');
+var ck = new Clock('2016-06-01',{
+    precision:100 // 默认为100ms
+}).start();
 ck.on('tick',function(event){
 	// do what you want
 });
@@ -25,7 +27,7 @@ ck.on('tick',function(event){
 
 ### 函数
 
-+ `getOffset` 获取时间差，一般用于不需要实时计数时
++ `getOffset` 获取时间差，一般用于不需要实时计数时，此时不需要调用start方法
 
 ```
 var Clocker = require('clocker');

@@ -1,4 +1,3 @@
-var PRECISION = 100; // 0.1 seconds, used to update the DOM
 var instances = [],
     matchers = [];
 // Miliseconds
@@ -128,7 +127,9 @@ function splitNumber (number){
 }
 
 // The Final Countdown
-var Countdown = function(finalDate, callback) {
+var Countdown = function(finalDate, option) {
+    option = option || {};
+    this.PRECISION = option.precision || 100; // 0.1 seconds, used to update the DOM
     this.interval = null;
     this.offset = {};
     // Register this instance
@@ -136,7 +137,6 @@ var Countdown = function(finalDate, callback) {
     instances.push(this);
     // Set the final date and start
     this.setFinalDate(finalDate);
-    this.start();
 };
 var Eventor = require('eventor');
 Eventor.mixTo(Countdown);
@@ -151,12 +151,14 @@ var fns = {
         this.update();
         this.interval = setInterval(function() {
             self.update.call(self);
-        }, PRECISION);
+        }, this.PRECISION);
+        return this;
     },
     stop: function() {
         clearInterval(this.interval);
         this.interval = null;
-        this.dispatchEvent('stoped');
+        this._dispatchEvent('stoped');
+        return this;
     },
     toggle: function() {
         if (this.interval) {
@@ -164,12 +166,13 @@ var fns = {
         } else {
             this.start();
         }
+        return this;
     },
     pause: function() {
-        this.stop();
+        return this.stop();
     },
     resume: function() {
-        this.start();
+        return this.start();
     },
     remove: function() {
         this.stop.call(this);
@@ -177,6 +180,7 @@ var fns = {
     },
     setFinalDate: function(value) {
         this.finalDate = parseDateString(value); // Cast the given date
+        return this;
     },
     getOffset: function(){
         this.totalSecsLeft = this.finalDate.getTime() - new Date().getTime(); // In miliseconds
@@ -209,12 +213,13 @@ var fns = {
         // Dispatch an event
         if (this.totalSecsLeft === 0) {
             this.stop();
-            this.dispatchEvent('finish');
+            this._dispatchEvent('finish');
         } else {
-            this.dispatchEvent('update');
+            this._dispatchEvent('update');
         }
+        return this;
     },
-    dispatchEvent: function(eventName) {
+    _dispatchEvent: function(eventName) {
         var event = {};
         event.finalDate = this.finalDate;
         event.offset = this.offset;

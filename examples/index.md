@@ -81,7 +81,7 @@ console.log(offset);
 ````javascript
 var Clocker = require('clocker');
 var $ = require('jquery');
-var cl =  new Clocker('2015/05/20').on('tick',function(event){
+var cl =  new Clocker('2015/05/20').start().on('tick',function(event){
 	//console.log(event);
 	$('#clock1').html(event.strftime('<span>%D</span> 天 %H时%M分%S秒'));
 	$('#clock2').html(event.strftime('<span>%_D1%_D2</span> 天 %_H1%_H2时%_M1%_M2分%_S1%_S2秒'));

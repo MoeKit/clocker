@@ -69,7 +69,7 @@ var clockers = $('.clocker-box');
 var tpls = clockers.map(function(index,one){
     return $(one).html();
 }).get();
-var cl =  new Clocker('2015/05/20').on('tick',function(event){
+var cl =  new Clocker('2015/05/20').start().on('tick',function(event){
 	clockers.each(function(index,one){
 	    $(one).html(event.strftime(tpls[index])).show();
 	});
